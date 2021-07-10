@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import React, { useRef, useState } from "react";
-import firebase from "./firebase.js";
-import './App.css';
+import firebase from "../firebase.js";
+import './Home.css';
 
 import "firebase/firestore";
 import "firebase/auth";
@@ -17,34 +17,10 @@ function App() {
 
   return (
     <div>
-      {/* <SignOut /> */}
       <section>
         <ChatRoom />
       </section>
     </div>
-  );
-}
-
-function SignIn() {
-  const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
-  };
-
-  return (
-    <div>
-      <button onClick={signInWithGoogle}>Sign In With Google</button>
-    </div>
-  );
-}
-
-function SignOut() {
-  return (
-    auth.currentUser && (
-      <div>
-        <button onClick={() => auth.signOut()}>Sign Out</button>
-      </div>
-    )
   );
 }
 
@@ -97,7 +73,7 @@ function ChatMessage(props) {
   const msgClass = uid === auth.currentUser.uid ? "sent" : "received";
   return (
     <div className={`message ${msgClass}`}>
-      <img src={photoURL} />
+      <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} />
       <p>{text}</p>
     </div>
   );
