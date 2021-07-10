@@ -26,6 +26,8 @@ import App from "./App";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import firebase, { auth, provider } from "./firebase.js";
 import Chatbox from "./Home/Chatbox";
+import { VideoCall } from "./Video/Index";
+import VideoRoomComponent from "./Video/VideoRoomComponent";
 class AppRouter extends React.Component {
   constructor(props) {
     super(props);
@@ -65,6 +67,7 @@ class AppRouter extends React.Component {
                   Logout
                 </a>
                 <Link to="/chat">Chat</Link>
+                <Link to="/video">Video Call</Link>
               </div>
             )}
           </nav>
@@ -73,7 +76,9 @@ class AppRouter extends React.Component {
             <Route path="/" exact component={Home} />
             <Route path="/login" exact component={Login} />
             <Route path="/register" exact component={Register} />
-            <Route path="/chat" exact component={App} />
+            <Route path="/chat" exact component={Chatbox} />
+            <Route path="/video" exact component={VideoCall} />
+            <Route path="/video/room" exact component={VideoRoomComponent} />
             <Route component={NoMatch} />
           </Switch>
         </div>

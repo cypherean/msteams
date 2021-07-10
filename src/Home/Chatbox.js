@@ -1,8 +1,9 @@
-import logo from "./logo.svg";
-import React, { useRef, useState } from "react";
-import firebase from "../firebase.js";
+import logo from "../logo.svg";
+import React, { useRef, useState, useEffect } from "react";
 import './Home.css';
+import PersonIcon from '@material-ui/icons/Person';
 
+import firebase from "../firebase.js";
 import "firebase/firestore";
 import "firebase/auth";
 
@@ -12,9 +13,8 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
-function App() {
+function Chatbox() {
   // const [user] = useAuthState(auth);  
-
   return (
     <div>
       <section>
@@ -25,6 +25,11 @@ function App() {
 }
 
 function ChatRoom() {
+  
+  useEffect(() => {
+    dummy.current.scrollIntoView({ behavior: "smooth" });
+  });
+
   const messageRef = firestore.collection("messages");
   const query = messageRef.orderBy("createdAt").limit(30);
 
@@ -73,10 +78,10 @@ function ChatMessage(props) {
   const msgClass = uid === auth.currentUser.uid ? "sent" : "received";
   return (
     <div className={`message ${msgClass}`}>
-      <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} />
+      <img src={photoURL || PersonIcon} />
       <p>{text}</p>
     </div>
   );
 }
 
-export default App;
+export default Chatbox;
