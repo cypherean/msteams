@@ -41,7 +41,7 @@ class VideoRoomComponent extends Component {
         this.hasBeenUpdated = false;
         this.layout = new OpenViduLayout();
         let sessionName = getParameterByName("id");
-        let userName = '';
+        let userName = 'shreya';
         this.remotes = [];
         this.localUserAccessAllowed = false;
         this.state = {
@@ -82,7 +82,7 @@ class VideoRoomComponent extends Component {
             bigFirst: true, // Whether to place the big one in the top left (true) or bottom right
             animate: true, // Whether you want to animate the transitions
         };
-        this.userName = auth.currentUser? auth.currentUser.displayName : "";
+        this.userName = auth.currentUser? auth.currentUser.displayName : "shreya";
         this.layout.initLayoutContainer(document.getElementById('layout'), openViduLayoutOptions);
         window.addEventListener('beforeunload', this.onbeforeunload);
         window.addEventListener('resize', this.updateLayout);

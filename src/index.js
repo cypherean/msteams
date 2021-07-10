@@ -1,21 +1,3 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
-// import reportWebVitals from './reportWebVitals';
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
-
-// // If you want to start measuring performance in your app, pass a function
-// // to log results (for example: reportWebVitals(console.log))
-// // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();
-
 import React from "react";
 import ReactDOM from "react-dom";
 import Home from "./Home/Home";
@@ -28,6 +10,7 @@ import firebase, { auth, provider } from "./firebase.js";
 import Chatbox from "./Home/Chatbox";
 import { VideoCall } from "./Video/Index";
 import VideoRoomComponent from "./Video/VideoRoomComponent";
+import Team from "./Home/Team";
 class AppRouter extends React.Component {
   constructor(props) {
     super(props);
@@ -68,6 +51,7 @@ class AppRouter extends React.Component {
                 </a>
                 <Link to="/chat">Chat</Link>
                 <Link to="/video">Video Call</Link>
+                <Link to="/team">Team</Link>
               </div>
             )}
           </nav>
@@ -79,6 +63,7 @@ class AppRouter extends React.Component {
             <Route path="/chat" exact component={Chatbox} />
             <Route path="/video" exact component={VideoCall} />
             <Route path="/video/room" exact component={VideoRoomComponent} />
+            <Route path="/team" exact component={Team} />
             <Route component={NoMatch} />
           </Switch>
         </div>

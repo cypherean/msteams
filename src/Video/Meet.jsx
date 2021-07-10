@@ -12,7 +12,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
-const user = auth.currentUser ? auth.currentUser.displayName : "";
+const user = auth.currentUser ? auth.currentUser.displayName : "shreya";
 
 function Meet() {
 	useEffect(() => {
