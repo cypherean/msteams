@@ -10,7 +10,9 @@ import firebase, { auth, provider } from "./firebase.js";
 import Chatbox from "./Home/Chatbox";
 import { VideoCall } from "./Video/Index";
 import VideoRoomComponent from "./Video/VideoRoomComponent";
-import Team from "./Home/Team";
+import CreateTeam from "./Home/CreateTeam";
+import JoinTeam from "./Home/JoinTeam";
+
 class AppRouter extends React.Component {
   constructor(props) {
     super(props);
@@ -51,7 +53,8 @@ class AppRouter extends React.Component {
                 </a>
                 <Link to="/chat">Chat</Link>
                 <Link to="/video">Video Call</Link>
-                <Link to="/team">Team</Link>
+                <Link to="/createteam">Create Team</Link>
+                <Link to="/jointeam">Join Team</Link>
               </div>
             )}
           </nav>
@@ -63,7 +66,8 @@ class AppRouter extends React.Component {
             <Route path="/chat" exact component={Chatbox} />
             <Route path="/video" exact component={VideoCall} />
             <Route path="/video/room" exact component={VideoRoomComponent} />
-            <Route path="/team" exact component={Team} />
+            <Route path="/createteam" exact component={CreateTeam} />
+            <Route path="/jointeam" exact component={JoinTeam} />
             <Route component={NoMatch} />
           </Switch>
         </div>

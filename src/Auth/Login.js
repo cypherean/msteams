@@ -3,78 +3,228 @@ import firebase from "../firebase.js";
 import { Link } from "react-router-dom";
 // import './Auth.css';
 import Register from "./Register";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 class Login extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        username: "",
-        email: "",
-        password: "",
-        error: null,
-        };
-    }
-    signInWithGoogle = () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth.signInWithPopup(provider);
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      email: "",
+      password: "",
+      error: null,
     };
-    handleChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
-    };
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const { email, password } = this.state;
-        firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then((user) => {
-            this.props.history.push("/");
-        })
-        .catch((error) => {
-            this.setState({ error });
-        });
-    };
-    render() {
-        const { email, username, password, error } = this.state;
-        return (
-        <div className="auth-container">
-            <h1>Login to your account</h1>
-            {error && <p className="error-message">{error.message}</p>}
-            <form onSubmit={this.handleSubmit}>
-            {/* <label htmlFor="username">Username</label>
-            <input
-                type="text"
-                name="username"
-                id="username"
-                value={username}
-                onChange={this.handleChange}
-            /> */}
-            <label htmlFor="email">Email address</label>
-            <input
-                type="text"
-                name="email"
-                id="email"
-                value={email}
-                onChange={this.handleChange}
+  }
+  signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth.signInWithPopup(provider);
+  };
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { email, password } = this.state;
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        this.props.history.push("/");
+      })
+      .catch((error) => {
+        this.setState({ error });
+      });
+  };
+  render() {
+    const { email, username, password, error } = this.state;
+    return (
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={this.handleChange}
             />
-            <label htmlFor="password">Password</label>
-            <input
-                type="password"
-                name="password"
-                id="password"
-                value={password}
-                onChange={this.handleChange}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={this.handleChange}
             />
-            <button className="general-submit" children="Get Started" />
-            <p>
-                Don't have an account?{" "}
-                <Link className="login-btn" to="/register">
-                Register here
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={this.handleSubmit}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
                 </Link>
-            </p>
-            </form>
+              </Grid>
+              <Grid item>
+                <Link to="/register" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
         </div>
-        );
-    }
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
+    );
+  }
+}
+
+function test() {
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <form className={classes.form} noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={email}
+            onChange={this.handleChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={this.handleChange}
+          />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={this.handleSubmit}
+          >
+            Sign In
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link to="/register" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </Container>
+  );
 }
 export default Login;
