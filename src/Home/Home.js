@@ -18,6 +18,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import JoinTeam from "./JoinTeam";
 import CreateTeam from "./CreateTeam";
+import MyTeam from "./MyTeam";
 
 function Copyright() {
   return (
@@ -69,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
 const cards = [
   { val: <JoinTeam /> },
   { val: <CreateTeam /> },
+  { val: <MyTeam />}
 ];
 function Home() {
   const classes = useStyles();

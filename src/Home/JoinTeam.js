@@ -56,7 +56,7 @@ function JoinTeam() {
     //   uid,
     //   photoURL,
     // });
-    const team = firestore.collection("users/" + uid + "/teams").add({
+    const team = firestore.collection("users/" + uid + "/teams").doc(id).add({
       teamID: id,
       teamName: name,
     });

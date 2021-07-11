@@ -13,6 +13,7 @@ import VideoRoomComponent from "./Video/VideoRoomComponent";
 import CreateTeam from "./Home/CreateTeam";
 import JoinTeam from "./Home/JoinTeam";
 import Navbar from "./Components/Nav";
+import MyTeam from "./Home/MyTeam";
 
 class AppRouter extends React.Component {
   constructor(props) {
@@ -56,6 +57,7 @@ class AppRouter extends React.Component {
             <Route path="/video/room" exact component={VideoRoomComponent} />
             <Route path="/createteam" exact component={CreateTeam} />
             <Route path="/jointeam" exact component={JoinTeam} />
+            <Route path="/teams" exact component={MyTeam} />
             <Route component={NoMatch} />
           </Switch>
         </div>

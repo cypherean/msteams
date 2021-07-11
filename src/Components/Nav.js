@@ -9,6 +9,10 @@ import MenuIcon from "@material-ui/icons/Menu";
 import firebase, { auth, provider } from "../firebase.js";
 
 const useStyles = makeStyles((theme) => ({
+  header: {
+    backgroundColor: "#2f5061",
+    color: "white",
+  },
   root: {
     flexGrow: 1,
   },
@@ -17,42 +21,42 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    textAlign: "center",
+    marginLeft: -100,
   },
 }));
 
 export default function Navbar() {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    function path(arg) {
-        window.location.href = arg;
-    }
-    function logOutUser() {
-        firebase
-        .auth()
-        .signOut()
-        .then((window.location = "/"));
-    }
+  function path(arg) {
+    window.location.href = arg;
+  }
+  function logOutUser() {
+    firebase
+      .auth()
+      .signOut()
+      .then((window.location = "/"));
+  }
 
-    return (
-        <div className={classes.root}>
-        <AppBar position="static">
-            <Toolbar>
-            <Button onClick={() => path("/")} color="inherit">
-                Home
-            </Button>
-            <Button onClick={() => path("/joinTeam")} color="inherit">
-                Join Team
-            </Button>
-            <Button onClick={() => path("/createteam")} color="inherit">
-                Create Team
-            </Button>
-            <Button onClick={() => path("/video")} color="inherit">
-                Video Call
-            </Button>
-            <Typography variant="h6" className={classes.title}></Typography>
-            <Button onClick={() => logOutUser} color="inherit">Logout</Button>
-            </Toolbar>
-        </AppBar>
-        </div>
-    );
+  return (
+    <div className={classes.root}>
+      <AppBar position="static" className={classes.header}>
+        <Toolbar>
+          <Button onClick={() => path("/")} color="inherit">
+            Home
+          </Button>
+          <Button onClick={() => path("/video")} color="inherit">
+            Video Call
+          </Button>
+          <Typography variant="h6" className={classes.title}>
+            MS Teams
+          </Typography>
+          <Button onClick={() => logOutUser} color="inherit">
+            Logout
+          </Button>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
 }

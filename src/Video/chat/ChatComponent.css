@@ -132,15 +132,14 @@
   }
   .message.right .user-img {
     right: -5px;
-    border: 1px solid #c8ffe8ab;
   }
   
   .message.right .msg-detail .msg-content {
-    background-color: #c8ffe8;
+    background-color: #e57f84;
     float: right;
   }
   .message.right .msg-detail .msg-content span.triangle {
-    background-color: #c8ffe8;
+    background-color: #e57f84;
     border-bottom-width: 0;
     border-left-width: 0;
     right: -5px;
@@ -155,7 +154,7 @@
     background-color: #ffffff;
     text-align: center;
     padding: 10px 0px;
-    height: 30px;
+    height: 45px;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
   }
@@ -170,14 +169,15 @@
   }
   
   #sendButton {
-    background-color: #81e9b0;
+    background-color: #f50057;
     position: absolute;
     right: 10px;
     top: 0;
     bottom: 0;
     margin: auto;
-    border: 1px solid #7ae2a9;
+    border: 1px solid #f50057;
     box-shadow: none !important;
+    color: white;
   }
   #sendButton {
     margin-left: 3px !important;

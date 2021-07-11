@@ -1,7 +1,7 @@
 import logo from "../logo.svg";
 import React, { useRef, useState, useEffect } from "react";
-import './Home.css';
-import PersonIcon from '@material-ui/icons/Person';
+import "./Home.css";
+import PersonIcon from "@material-ui/icons/Person";
 
 import firebase from "../firebase.js";
 import "firebase/firestore";
@@ -12,6 +12,15 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
+
+function getParameterByName(name, url = window.location.href) {
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return "";
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 
 function Chatbox() {
   return (
@@ -24,12 +33,40 @@ function Chatbox() {
 }
 
 function ChatRoom() {
-  
+  const [user, setUser] = useState([]);
+
   useEffect(() => {
     dummy.current.scrollIntoView({ behavior: "smooth" });
-  });
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(auth.currentUser);
+        getMembers();
+      }
+    });
+    const teamId = getParameterByName("id");
+  }, []);
 
-  const messageRef = firestore.collection("groups").doc("test").collection("texts");
+  const teamId = getParameterByName("id");
+  const [members, setMembers] = useState([]);
+  function getMembers() {
+    const membersRef = firestore
+      .collection("groups")
+      .doc(teamId)
+      .collection("members")
+      .get()
+      .then((querySnapshot) => {
+        console.log("setttttttttttttttt");
+        const doz = querySnapshot.docs.map((doc) => doc.data());
+        setMembers(querySnapshot.docs.map((doc) => doc.data()));
+        console.log(doz);
+        console.log(members);
+      });
+  }
+
+  const messageRef = firestore
+    .collection("groups")
+    .doc(teamId)
+    .collection("texts");
   const query = messageRef.orderBy("createdAt").limit(30);
 
   const [messages] = useCollectionData(query, { idField: "id" });
@@ -52,23 +89,35 @@ function ChatRoom() {
 
   const dummy = useRef();
   return (
-    <>
-      <main>
-        <div>
-          {messages &&
-            messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
-        </div>
-        <div ref={dummy}></div>
-      </main>
+    <div id="chat" onLoad={() => getMembers}>
+      <div id="members">
+        {
+          <div>
+            <h1>Hi</h1>
+            <div id="member">{document.displayName}</div>
+          </div>
+        }
+      </div>
+      <div id="chatbox">
+        <main>
+          <div>
+            {messages &&
+              messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+          </div>
+          <div ref={dummy}></div>
+        </main>
 
-      <form onSubmit={sendMessage}>
-        <input
-          value={formValue}
-          onChange={(e) => setFormValue(e.target.value)}
-        />
-        <button type="submit">Send</button>
-      </form>
-    </>
+        <form id="sendmessage" onSubmit={() => sendMessage}>
+          <input
+            required
+            value={formValue}
+            placeholder="Write a message..."
+            onChange={(e) => setFormValue(e.target.value)}
+          />
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
   );
 }
 
@@ -77,7 +126,7 @@ function ChatMessage(props) {
   const msgClass = uid === auth.currentUser.uid ? "sent" : "received";
   return (
     <div className={`message ${msgClass}`}>
-      <img src={photoURL || PersonIcon} />
+      <img src={photoURL || "https://source.unsplash.com/random"} />
       <p>{text}</p>
     </div>
   );

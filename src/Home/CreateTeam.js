@@ -57,7 +57,7 @@ function CreateTeam() {
           uid,
           photoURL,
         });
-        const team = firestore.collection("users/" + uid + "/teams").add({
+        const team = firestore.collection("users/" + uid + "/teams").doc(data.id).add({
           teamID: data.id,
           teamName: formValue,
         });
