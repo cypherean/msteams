@@ -29,6 +29,8 @@ const firestore = firebase.firestore();
 function CreateTeam() {
   const [teamname, setTeamname] = useState("");
 
+  const [teamID, setTeamID] = useState(null);
+
   const createTeam = async (e) => {
     e.preventDefault();
     const groupDetails = firestore.collection("groups");
@@ -39,6 +41,7 @@ function CreateTeam() {
         name: formValue,
       })
       .then((data) => {
+        setTeamID(data.id);
         console.log(data);
         const group = firestore
           .collection("groups/" + data.id + "/members")
@@ -65,37 +68,29 @@ function CreateTeam() {
 
   return (
     <div>
-      <Navbar></Navbar>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Typography component="h1" variant="h5">
-          Create a Team
-        </Typography>
-        <Grid container spacing={0}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              name="teamname"
-              variant="outlined"
-              required
-              fullWidth
-              id="teamname"
-              label="Team name"
-              autoFocus
-              value={teamname}
-              onChange={(e) => setTeamname(e.target.value)}
-            />
-          </Grid>
-        </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={(e) => createTeam}
-        >
-          Create Team
-        </Button>
-      </Container>
+      <h4>Create a Team</h4>
+      {!teamID && (
+        <div>
+          <p>
+            Enter team name and share the generated team code with your friends
+          </p>
+          <form onSubmit={createTeam}>
+            <div>
+              <input
+                value={formValue}
+                onChange={(e) => setFormValue(e.target.value)}
+              />
+            </div>
+            <button type="submit">Create!</button>
+          </form>
+        </div>
+      )}
+      {teamID && (
+        <div>
+          <p>Share the team code with your friends:</p>
+          <p>{teamID}</p>
+        </div>
+      )}
     </div>
   );
 }

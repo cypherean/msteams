@@ -28,39 +28,11 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
-function JoinTeam() {
-  const joinTeam = async (e) => {
-    e.preventDefault();
-    const { uid, email, displayName, photoURL } = auth.currentUser;
-    const id = formValue;
-
-    var name = "";
-    firestore
-      .collection("groups/" + id)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          name = doc.name;
-        }
-      });
-
-    const group = firestore.collection("groups/" + id + "/members").add({
-      uid,
-      email,
-      displayName,
-      photoURL,
-    });
-    // const text = firestore.collection("groups/" + data.id + "/texts").add({
-    //   text: "Welcome",
-    //   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    //   uid,
-    //   photoURL,
-    // });
-    const team = firestore.collection("users/" + uid + "/teams").add({
-      teamID: id,
-      teamName: name,
-    });
-  };
+function MyTeam() {
+  useEffect(() => {
+    const uid = auth.currentUser.uid;
+    const [teams] = 
+  });
 
   const [formValue, setFormValue] = useState("");
 

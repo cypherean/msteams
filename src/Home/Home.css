@@ -38,7 +38,6 @@ h1 {
 main {
   padding: 10px;
   height: 80vh;
-  margin: 10vh 0 10vh;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
@@ -56,23 +55,25 @@ main::-webkit-scrollbar-thumb {
   background: #6649b8;
 }
 
-/* form {
-    height: 10vh;
-    position: fixed;
-    bottom: 0;
-    background-color: rgb(24, 23, 23);
-    width: 100%;
-    max-width: 728px;
-    display: flex;
-    font-size: 1.5rem;
-  }
-  
-  form button {
-    width: 20%;
-    background-color: rgb(56, 56, 143);
-  } */
-
-input {
+.root {
+  max-width: 345;
+}
+.media {
+  height: 0;
+  padding-top: "56.25%";
+}
+.expand {
+  transform: "rotate(0deg)";
+  margin-left: "auto";
+  transition: "transform";
+}
+.expandOpen {
+  transform: "rotate(180deg)";
+}
+.avatar {
+  background-color: red(5, 0, 0);
+}
+/* input {
   margin: 100px;
   line-height: 1.5;
   background-color: #181717;
@@ -81,10 +82,10 @@ input {
   outline: none;
   border: none;
   padding: 0 10px;
-}
-
-button {
-  background-color: #282c34; /* Green */
+} */
+/* 
+ button {
+  background-color: #282c34; Green 
   border: none;
   color: white;
   padding: 15px 32px;
@@ -93,7 +94,7 @@ button {
   display: inline-block;
   cursor: pointer;
   font-size: 1.25rem;
-}
+}  */
 
 button:disabled {
   opacity: 0.5;
@@ -115,7 +116,7 @@ li {
   list-style: none;
 }
 
-p {
+/* p {
   max-width: 500px;
   margin-bottom: 12px;
   line-height: 24px;
@@ -124,7 +125,7 @@ p {
   position: relative;
   color: white;
   text-align: center;
-}
+} */
 
 .message {
   display: flex;
@@ -135,14 +136,18 @@ p {
   flex-direction: row-reverse;
 }
 
-.sent p {
+.sent {
   color: white;
   background: #0b93f6;
   align-self: flex-end;
 }
-.received p {
+.received {
   background: #e5e5ea;
   color: black;
+}
+
+p {
+  font-size: 16px;
 }
 
 img {
@@ -150,4 +155,22 @@ img {
   height: 40px;
   border-radius: 50%;
   margin: 2px 5px;
+}
+
+.paper {
+  margin-top: 8;
+  display: "flex";
+  flex-direction: "column";
+  align-items: "center";
+}
+.avatar {
+  margin: 1;
+  /* background-color: theme.palette.secondary.main, */
+}
+.form {
+  width: "100%"; 
+  margin-top: 3;
+}
+.submit {
+  margin: 3, 0, 2;
 }
