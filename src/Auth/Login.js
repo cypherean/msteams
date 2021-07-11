@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import firebase from "../firebase.js";
 import { Link } from "react-router-dom";
-// import './Auth.css';
 import Register from "./Register";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -9,7 +8,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
+import Linki from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -22,7 +21,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Shreyaa Sharma
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -50,112 +49,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      email: "",
-      password: "",
-      error: null,
-    };
-  }
-  signInWithGoogle = () => {
+function Login() {
+  const classes = useStyles();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth.signInWithPopup(provider);
-  };
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-  handleSubmit = (e) => {
+  }
+  
+  function handleSubmit(e) {
     e.preventDefault();
-    const { email, password } = this.state;
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        this.props.history.push("/");
+        window.location.href = '/';
       })
       .catch((error) => {
-        this.setState({ error });
+          console.log(error)
+        // this.setState({ error });
       });
-  };
-  render() {
-    const { email, username, password, error } = this.state;
-    return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={this.handleChange}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={this.handleChange}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={this.handleSubmit}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link to="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
-    );
   }
-}
 
-function test() {
+//   const { email, username, password, error };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -178,7 +97,7 @@ function test() {
             autoComplete="email"
             autoFocus
             value={email}
-            onChange={this.handleChange}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -191,7 +110,7 @@ function test() {
             id="password"
             autoComplete="current-password"
             value={password}
-            onChange={this.handleChange}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -203,7 +122,7 @@ function test() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={this.handleSubmit}
+            onClick={handleSubmit}
           >
             Sign In
           </Button>
@@ -227,4 +146,5 @@ function test() {
     </Container>
   );
 }
+
 export default Login;

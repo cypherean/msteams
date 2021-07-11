@@ -229,6 +229,7 @@ class VideoRoomComponent extends Component {
         if (this.props.leaveSession) {
             this.props.leaveSession();
         }
+        window.location.href = '/';
     }
     camStatusChanged() {
         localUser.setVideoActive(!localUser.isVideoActive());
@@ -266,7 +267,7 @@ class VideoRoomComponent extends Component {
     subscribeToStreamCreated() {
         this.state.session.on('streamCreated', (event) => {
             const subscriber = this.state.session.subscribe(event.stream, undefined);
-            // var subscribers = this.state.subscribers;
+            var subscribers = this.state.subscribers;
             subscriber.on('streamPlaying', (e) => {
                 this.checkSomeoneShareScreen();
                 subscriber.videos[0].video.parentElement.classList.remove('custom-class');
@@ -422,7 +423,6 @@ class VideoRoomComponent extends Component {
 
     checkSomeoneShareScreen() {
         let isScreenShared;
-        // return true if at least one passes the test
         isScreenShared = this.state.subscribers.some((user) => user.isScreenShareActive()) || localUser.isScreenShareActive();
         const openviduLayoutOptions = {
             maxRatio: 3 / 2,
@@ -518,16 +518,8 @@ class VideoRoomComponent extends Component {
         );
     }
 
-    /**
-     * --------------------------
+    /*
      * SERVER-SIDE RESPONSIBILITY
-     * --------------------------
-     * These methods retrieve the mandatory user token from OpenVidu Server.
-     * This behaviour MUST BE IN YOUR SERVER-SIDE IN PRODUCTION (by using
-     * the API REST, openvidu-java-client or openvidu-node-client):
-     *   1) Initialize a session in OpenVidu Server	(POST /api/sessions)
-     *   2) Generate a token in OpenVidu Server		(POST /api/tokens)
-     *   3) The token must be consumed in Session.connect() method
      */
 
     getToken() {

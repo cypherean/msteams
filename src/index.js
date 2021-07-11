@@ -12,6 +12,7 @@ import { VideoCall } from "./Video/Index";
 import VideoRoomComponent from "./Video/VideoRoomComponent";
 import CreateTeam from "./Home/CreateTeam";
 import JoinTeam from "./Home/JoinTeam";
+import Navbar from "./Components/Nav";
 
 class AppRouter extends React.Component {
   constructor(props) {
@@ -39,22 +40,9 @@ class AppRouter extends React.Component {
       <Router>
         <div className="app">
           <nav className="main-nav">
-            {!this.state.user && (
-              <div>
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
-              </div>
-            )}
-
             {this.state.user && (
               <div>
-                <a href="#!" onClick={this.logOutUser}>
-                  Logout
-                </a>
-                <Link to="/chat">Chat</Link>
-                <Link to="/video">Video Call</Link>
-                <Link to="/createteam">Create Team</Link>
-                <Link to="/jointeam">Join Team</Link>
+                <Navbar />
               </div>
             )}
           </nav>

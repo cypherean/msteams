@@ -19,12 +19,15 @@ function JoinTeam() {
     const { uid, email, displayName, photoURL } = auth.currentUser;
     const id = formValue;
 
-    var name = '';
-    firestore.collection("groups/" + id).get().then(doc => {
+    var name = "";
+    firestore
+      .collection("groups/" + id)
+      .get()
+      .then((doc) => {
         if (doc.exists) {
-            name = doc.name;
+          name = doc.name;
         }
-    })
+      });
 
     const group = firestore.collection("groups/" + id + "/members").add({
       uid,
@@ -48,12 +51,14 @@ function JoinTeam() {
 
   return (
     <>
-      <p> Enter team code</p>
+      <p className="new"> Enter team code</p>
       <form onSubmit={joinTeam}>
-        <input
-          value={formValue}
-          onChange={(e) => setFormValue(e.target.value)}
-        />
+        <div>
+          <input
+            value={formValue}
+            onChange={(e) => setFormValue(e.target.value)}
+          />
+        </div>
         <button type="submit">Join</button>
       </form>
     </>
