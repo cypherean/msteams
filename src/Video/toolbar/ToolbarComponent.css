@@ -1,6 +1,7 @@
 #header {
     color: #ffffff;
-    height: 40px;
+    padding: 10px;
+    height: 64px;
     background-color: #333333;
     padding: 0 14px 0 0;
     position: absolute;
@@ -11,6 +12,7 @@
   }
   .toolbar{
     padding: 0 !important;
+    padding-top: 5px !important;
   }
   
   .headerLight{

@@ -1,4 +1,6 @@
 import logo from "../logo.svg";
+import group from "../group.svg"; 
+
 import React, { useRef, useState, useEffect } from "react";
 import PersonIcon from "@material-ui/icons/Person";
 import Avatar from "@material-ui/core/Avatar";
@@ -29,12 +31,16 @@ const firestore = firebase.firestore();
 function CreateTeam() {
   const [teamname, setTeamname] = useState("");
 
-  const [teamID, setTeamID] = useState(null);
+  const [teamID, setTeamID] = useState("");
 
   const createTeam = async (e) => {
     e.preventDefault();
+    if (formValue.length === 0) {
+      alert("Enter team name");
+      return;
+    }
     const groupDetails = firestore.collection("groups");
-    const user = auth.currentUser;
+    // const user = auth.currentUser;
     const { uid, email, displayName, photoURL } = auth.currentUser;
     groupDetails
       .add({
@@ -42,10 +48,12 @@ function CreateTeam() {
       })
       .then((data) => {
         setTeamID(data.id);
-        console.log(data);
+        console.log("aaaaaaaaaaa");
+        console.log(data.id);
         const group = firestore
           .collection("groups/" + data.id + "/members")
-          .add({
+          .doc(uid)
+          .set({
             uid,
             email,
             displayName,
@@ -57,18 +65,61 @@ function CreateTeam() {
           uid,
           photoURL,
         });
-        const team = firestore.collection("users/" + uid + "/teams").doc(data.id).add({
-          teamID: data.id,
-          teamName: formValue,
-        });
+        const team = firestore
+          .collection("users/" + uid + "/teams")
+          .doc(data.id)
+          .set({
+            teamID: data.id,
+            teamName: formValue,
+          });
+        window.location.href = "/chat?id=" + data.id;
       });
+    console.log(teamID);
   };
 
   const [formValue, setFormValue] = useState("");
 
   return (
     <div>
-      <h4>Create a Team</h4>
+      <div>
+        <div class="container-3">
+          <div class="card-3">
+            <img
+              src={group}
+              alt="Person"
+              class="card__image"
+            />
+            <p class="card__name">Create a Team</p>
+            {!teamID && (
+              <>
+                <div class="grid-container">
+                  Enter team name and share the generated team code with your
+                  friends
+                </div>
+                <input
+                  required="true"
+                  class="btn draw-border"
+                  type="text"
+                  value={formValue}
+                  onChange={(e) => setFormValue(e.target.value)}
+                />
+                <button class="btn draw-border" onClick={createTeam}>
+                  Create
+                </button>
+              </>
+            )}
+            {teamID && (
+              <div>
+                <div class="grid-container">
+                  Share the team code with your friends:
+                </div>
+                <div class="grid-container">{teamID}</div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* <h4></h4>
       {!teamID && (
         <div>
           <p>
@@ -90,7 +141,7 @@ function CreateTeam() {
           <p>Share the team code with your friends:</p>
           <p>{teamID}</p>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

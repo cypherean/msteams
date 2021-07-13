@@ -36,12 +36,12 @@ export default function Navbar() {
     firebase
       .auth()
       .signOut()
-      .then((window.location = "/"));
+      .then((window.location.href = "/login"));
   }
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.header}>
+      <AppBar position="fixed" style={{top:0}} className={classes.header}>
         <Toolbar>
           <Button onClick={() => path("/")} color="inherit">
             Home
@@ -52,7 +52,7 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
             MS Teams
           </Typography>
-          <Button onClick={() => logOutUser} color="inherit">
+          <Button onClick={logOutUser} color="inherit">
             Logout
           </Button>
         </Toolbar>

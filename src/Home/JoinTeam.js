@@ -1,4 +1,5 @@
 import logo from "../logo.svg";
+import group from "../group.svg"; 
 import React, { useRef, useState, useEffect } from "react";
 import "./Home.css";
 import PersonIcon from "@material-ui/icons/Person";
@@ -31,20 +32,30 @@ const firestore = firebase.firestore();
 function JoinTeam() {
   const joinTeam = async (e) => {
     e.preventDefault();
+    if (formValue.length === 0) {
+      alert("Enter team code");
+      return;
+    }
     const { uid, email, displayName, photoURL } = auth.currentUser;
     const id = formValue;
 
-    var name = "";
-    firestore
-      .collection("groups/" + id)
+    var tname = "";
+    await firestore
+      .collection("groups")
       .get()
-      .then((doc) => {
-        if (doc.exists) {
-          name = doc.name;
-        }
+      .then((querySnapshot) => {
+        let documents = querySnapshot.docs.map((doc) => ({
+          name: doc.data().name,
+          id: doc.id,
+        }));
+        documents.forEach((doc) => {
+          if (doc.id == id) {
+            tname = doc.name;
+          }
+        });
       });
 
-    const group = firestore.collection("groups/" + id + "/members").add({
+    const group = await firestore.collection("groups/" + id + "/members").add({
       uid,
       email,
       displayName,
@@ -56,27 +67,40 @@ function JoinTeam() {
     //   uid,
     //   photoURL,
     // });
-    const team = firestore.collection("users/" + uid + "/teams").doc(id).add({
-      teamID: id,
-      teamName: name,
-    });
+    const team = await firestore
+      .collection("users/" + uid + "/teams")
+      .doc(id)
+      .set({
+        teamID: id,
+        teamName: tname,
+      });
+    window.location.href = "/chat?id=" + id;
   };
 
   const [formValue, setFormValue] = useState("");
 
   return (
     <>
-      <h4>Join a team</h4>
-      <p>Enter the team code to join a team</p>
-      <form onSubmit={joinTeam}>
-        <div>
+      <div class="container-3">
+        <div class="card-3">
+          <img
+            src={group}
+            alt="Person"
+            class="card__image"
+          />
+          <p class="card__name">Join a team</p>
+          <div class="grid-container">Enter the team code to join a team</div>
           <input
+            required
+            class="btn draw-border"
             value={formValue}
             onChange={(e) => setFormValue(e.target.value)}
           />
+          <button class="btn draw-border" onClick={joinTeam} type="submit">
+            Join
+          </button>
         </div>
-        <button type="submit">Join</button>
-      </form>
+      </div>
     </>
   );
 }

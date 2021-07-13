@@ -5,7 +5,7 @@ import "./index.css";
 import Login from "./Auth/Login";
 import Register from "./Auth/Register";
 import App from "./App";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import firebase, { auth, provider } from "./firebase.js";
 import Chatbox from "./Home/Chatbox";
 import { VideoCall } from "./Video/Index";
@@ -33,7 +33,7 @@ class AppRouter extends React.Component {
     firebase
       .auth()
       .signOut()
-      .then((window.location = "/"));
+      .then((window.location.href = "/login"));
   };
 
   render() {
@@ -49,7 +49,15 @@ class AppRouter extends React.Component {
           </nav>
 
           <Switch>
-            <Route path="/" exact component={Home} />
+            <Route exact path="/">
+              {this.state.user ? <Home /> : <Redirect to="/login" />}
+            </Route>
+            <Route exact path="/login">
+              {this.state.user ? <Redirect to="/" /> : <Login />}
+            </Route>
+            <Route exact path="/register">
+              {this.state.user ? <Redirect to="/" /> : <Register />}
+            </Route>
             <Route path="/login" exact component={Login} />
             <Route path="/register" exact component={Register} />
             <Route path="/chat" exact component={Chatbox} />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Component } from "react";
+import vc from "../group.svg"; 
 import { NavLink, Route } from "react-router-dom";
 import $ from "jquery";
 import "./Video.css";
@@ -35,7 +36,7 @@ function Meet() {
       <div class="container-2">
         <div class="card">
           <img
-            src="https://lh3.googleusercontent.com/pZwZJ5HIL5iKbA91UGMUIPR0VJWa3K0vOGzDZmY6wU3EJBUdfsby3VEyxU162XxTyOyP3D154tjkr-4Jgcx8lygYUR8eB-jVmld4dsHi1c-mE_A8jKccseAG7bdEwVrcuuk6ciNtSw=s170-no"
+            src={vc}
             alt="Person"
             class="card__image"
           />

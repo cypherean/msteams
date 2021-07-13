@@ -20,7 +20,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://cypherean.github.io/portfolio/">
         Shreyaa Sharma
       </Link>{" "}
       {new Date().getFullYear()}
@@ -59,22 +59,22 @@ function Login() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth.signInWithPopup(provider);
   }
-  
+
   function handleSubmit(e) {
     e.preventDefault();
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        window.location.href = '/';
+        window.location.href = "/";
       })
       .catch((error) => {
-          console.log(error)
+        alert(error);
         // this.setState({ error });
       });
   }
 
-//   const { email, username, password, error };
+  //   const { email, username, password, error };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

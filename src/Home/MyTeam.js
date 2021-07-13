@@ -1,4 +1,5 @@
 import logo from "../logo.svg";
+import group from "../group.svg"; 
 import React, { useRef, useState, useEffect } from "react";
 import "./Home.css";
 import PersonIcon from "@material-ui/icons/Person";
@@ -73,19 +74,41 @@ function MyTeam() {
 
   return (
     <>
-    
-      <h4>My teams</h4>
+      <div>
+        <div class="container-3">
+          <div class="card-3">
+            <img
+              src={group}
+              alt="Person"
+              class="card__image"
+            />
+            <p class="card__name">My teams</p>
+            {documents.length === 0 && (
+              <div class="grid-container">You haven't joined a team yet</div>
+            )}
+            {documents &&
+              documents.map((doc) => (
+                <div>
+                  <button
+                    class="btn draw-border"
+                    onClick={() => reroute(doc.teamID)}
+                  >
+                    {doc.teamName}
+                  </button>
+                </div>
+              ))}
+          </div>
+        </div>
+      </div>
+      {/* <h4>My teams</h4>
       {documents.length === 0 && (
         <p> You haven't joined a team yet</p>
-        // <form onSubmit={getTeams}>
-        //   <button type="submit">Get my teams</button>
-        // </form>
+        
       )}
 
       {documents &&
         documents.map((doc) => (
           <div>
-            {/* <p>{doc.teamID}</p> */}
             <Button
               background-color="primary"
               onClick={() => reroute(doc.teamID)}
@@ -93,7 +116,7 @@ function MyTeam() {
               {doc.teamName}
             </Button>
           </div>
-        ))}
+        ))} */}
     </>
   );
 }

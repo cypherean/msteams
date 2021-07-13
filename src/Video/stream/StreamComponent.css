@@ -1,4 +1,6 @@
 .nickname {
+    top:97%;
+    right:0%;
     background: rgba(58, 64, 74, 0.651);
     padding: 5px !important;
     position: absolute;

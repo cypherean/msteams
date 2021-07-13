@@ -45,10 +45,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   },
   cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
+    paddingTop: theme.spacing(20),
+    paddingBottom: theme.spacing(10),
+    paddingLeft: theme.spacing(20),
+    paddingRight: theme.spacing(20),
     display: "flex",
     flexDirection: "row",
+    marginLeft: "10",
+    marginRight: "10",
   },
   card: {
     height: "100%",
@@ -70,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 const cards = [
   { val: <JoinTeam /> },
   { val: <CreateTeam /> },
-  { val: <MyTeam />}
+  { val: <MyTeam /> },
 ];
 function Home() {
   const classes = useStyles();
@@ -78,44 +82,12 @@ function Home() {
   return (
     <React.Fragment>
       <CssBaseline />
-      {/* <AppBar position="relative">
-        <Toolbar>
-          <CameraIcon className={classes.icon} />
-          <Typography variant="h6" color="inherit" noWrap>
-            Album layout
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
       <main>
-        <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
+        <Container className={classes.cardGrid} maxWidth="l">
           <Grid container spacing={4}>
             {cards.map((card) => (
-              <Grid item key={card} xs={10} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {card.val}
-                    </Typography>
-                    {/* <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
-                    </Typography> */}
-                  </CardContent>
-                  {/* <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions> */}
-                </Card>
+              <Grid item key={card} xs={12} sm={8} md={4}>
+                {card.val}
               </Grid>
             ))}
           </Grid>

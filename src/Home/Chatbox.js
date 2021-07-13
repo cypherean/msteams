@@ -2,7 +2,11 @@ import logo from "../logo.svg";
 import React, { useRef, useState, useEffect } from "react";
 import "./Home.css";
 import PersonIcon from "@material-ui/icons/Person";
-
+import IconButton from "@material-ui/core/IconButton";
+import Fab from "@material-ui/core/Fab";
+import HighlightOff from "@material-ui/icons/HighlightOff";
+import Send from "@material-ui/icons/Send";
+import { Tooltip } from "@material-ui/core";
 import firebase from "../firebase.js";
 import "firebase/firestore";
 import "firebase/auth";
@@ -41,12 +45,24 @@ function ChatRoom() {
       if (user) {
         setUser(auth.currentUser);
         getMembers();
+        getTeamDetails();
       }
     });
-    const teamId = getParameterByName("id");
   }, []);
 
   const teamId = getParameterByName("id");
+  const [teamDetails, setTeamDeatils] = useState();
+
+  function getTeamDetails() {
+    const membersRef = firestore
+      .collection("groups")
+      .doc(teamId)
+      .get()
+      .then((data) => {
+        setTeamDeatils(data.name);
+        console.log(data);
+      });
+  }
   const [members, setMembers] = useState([]);
   function getMembers() {
     const membersRef = firestore
@@ -55,11 +71,10 @@ function ChatRoom() {
       .collection("members")
       .get()
       .then((querySnapshot) => {
-        console.log("setttttttttttttttt");
         const doz = querySnapshot.docs.map((doc) => doc.data());
-        setMembers(querySnapshot.docs.map((doc) => doc.data()));
+        setMembers(doz);
         console.log(doz);
-        console.log(members);
+        doz.map(d => console.log(d.displayName))
       });
   }
 
@@ -89,32 +104,34 @@ function ChatRoom() {
 
   const dummy = useRef();
   return (
-    <div id="chat" onLoad={() => getMembers}>
+    <div id="chat">
       <div id="members">
-        {
-          <div>
-            <h1>Hi</h1>
-            <div id="member">{document.displayName}</div>
-          </div>
-        }
+        
+      <div id="teamName" class="grid-container draw-border" style={{top:100, left:100, position:"fixed"}}>Team Code: {teamId}</div>
+        {members.length > 0 &&
+          members.map(member => <div class="grid-container" value={member.displayName} />)}
       </div>
       <div id="chatbox">
-        <main>
-          <div>
+        <div>
+          <div id="test">
             {messages &&
               messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
           </div>
           <div ref={dummy}></div>
-        </main>
+        </div>
 
-        <form id="sendmessage" onSubmit={() => sendMessage}>
+        <form id="sendmessage" onSubmit={sendMessage} style={{bottom:0, position:"fixed"}}>
           <input
             required
             value={formValue}
             placeholder="Write a message..."
             onChange={(e) => setFormValue(e.target.value)}
           />
-          <button type="submit">Send</button>
+          <Tooltip title="Send message">
+            <Fab size="small" id="sendButton-1" onClick={sendMessage}>
+              <Send />
+            </Fab>
+          </Tooltip>
         </form>
       </div>
     </div>
